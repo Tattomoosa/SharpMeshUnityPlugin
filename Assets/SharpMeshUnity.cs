@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 // using SharpMesh;
 
-[CreateAssetMenu(fileName = "SharpMesh", menuName = "ScriptableObjects/SharpMeshUnity", order = 1)]
+[CreateAssetMenu(fileName = "SharpMesh", menuName = "SharpMesh", order = 1)]
 public class SharpMeshUnity : ScriptableObject 
 {
     public Mesh inputMesh;
@@ -11,6 +11,11 @@ public class SharpMeshUnity : ScriptableObject
 
     public void Process()
     {
+        if (inputMesh == null)
+        {
+            Debug.LogError("SharpMesh: Must specify a Mesh to process.");
+            return;
+        }
         SharpMesh.Mesh sInputMesh = MeshToSharpMesh(inputMesh);
         // TODO change to whatever this will be called
         // SharpMesh.Mesh[] result = SharpMesh.Process(sInputMesh);
@@ -21,17 +26,29 @@ public class SharpMeshUnity : ScriptableObject
             outputMeshList.Push(SharpMeshToMesh(m);
         }
          */
+        // TODO lol just to see if it works
+        Mesh cubeMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
+        outputMeshList.Add(cubeMesh);
+    }
+
+    public void Clear()
+    {
+        outputMeshList.Clear();
     }
 
     private SharpMesh.Mesh MeshToSharpMesh(Mesh mesh)
     {
-        Vector3[] vertices = mesh.vertices;
-        int[] triangles = mesh.triangles;
-        return new SharpMesh.Mesh();
+        SharpMesh.Mesh sMesh = new SharpMesh.Mesh();
+        // sMesh.vertices = mesh.vertices;
+        // sMesh.triangles = mesh.triangles;
+        return sMesh;
     }
 
     private Mesh SharpMeshToMesh(SharpMesh.Mesh sMesh)
     {
-        return new Mesh();
+        Mesh mesh = new Mesh();
+        // mesh.vertices = sMesh.vertices;
+        // mesh.triangles = sMesh.triangles;
+        return mesh;
     }
 }
