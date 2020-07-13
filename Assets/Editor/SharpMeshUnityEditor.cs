@@ -4,6 +4,9 @@
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Custom Editor for the SharpMeshUnity object.
+/// </summary>
 [CustomEditor(typeof(SharpMeshUnity))]
 public class SharpMeshUnityEditor : Editor
 {
@@ -15,7 +18,8 @@ public class SharpMeshUnityEditor : Editor
     public override void OnInspectorGUI()
     {
         SharpMeshUnity obj = (SharpMeshUnity)target;
-        DrawDefaultInspector();
+        // DrawDefaultInspector();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("inputMesh"));
         if (GUILayout.Button("Process"))
         {
             Debug.Log("Processing...");
@@ -26,5 +30,13 @@ public class SharpMeshUnityEditor : Editor
         {
             obj.Clear();
         }
+        /*
+        foreach (SerializedMesh mesh in obj.outputMeshList)
+        {
+            GUILayout.Label(mesh.ToString());
+        }
+        */
+        // GUILayout.Label(obj.outputMeshList.Count.ToString());
+        GUILayout.Label("Output Mesh Count: " + obj.outputMeshList.Count.ToString());
     }
 }
