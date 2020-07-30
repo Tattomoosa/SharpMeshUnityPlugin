@@ -5,18 +5,32 @@
 /// Perhaps storing them that way would be better, but it would create a lot of .asset files.
 /// TODO Maybe there is a better way to do this.
 /// </summary>
-[System.Serializable]
-public class SerializedMesh
+namespace SharpMeshUnity
 {
-    public Vector3[] vertices;
-    public int[] triangles;
-
-    public Mesh IntoMesh()
+    [System.Serializable]
+    public class SerializedMesh
     {
-        return new Mesh
+        public Vector3[] vertices;
+        public int[] triangles;
+
+        public SerializedMesh(Vector3[] vertices_, int[] triangles_)
         {
-            vertices = vertices,
-            triangles = triangles
-        };
+            vertices = vertices_;
+            triangles = triangles_;
+        }
+        public SerializedMesh(Mesh mesh)
+        {
+            vertices = mesh.vertices;
+            triangles = mesh.triangles;
+        }
+
+        public Mesh IntoMesh()
+        {
+            return new Mesh
+            {
+                vertices = vertices,
+                triangles = triangles
+            };
+        }
     }
 }

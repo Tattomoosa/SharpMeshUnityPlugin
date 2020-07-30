@@ -2,13 +2,14 @@
 // using System.Collections.Generic;
 // using UnityEngine;
 using UnityEditor;
+using SharpMeshUnity;
 using UnityEngine;
 
 /// <summary>
-/// Custom Editor for the SharpMeshUnity object.
+/// Custom Editor for the SharpMesh.SharpMeshObject
 /// </summary>
-[CustomEditor(typeof(SharpMeshUnity))]
-public class SharpMeshUnityEditor : Editor
+[CustomEditor(typeof(SharpMeshObject))]
+public class SharpMeshObjectEditor : Editor
 {
     private void OnEnable()
     {
@@ -17,7 +18,7 @@ public class SharpMeshUnityEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        SharpMeshUnity obj = (SharpMeshUnity)target;
+        SharpMeshObject obj = (SharpMeshObject)target;
         // DrawDefaultInspector();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("inputMesh"));
         if (GUILayout.Button("Process"))
@@ -30,13 +31,6 @@ public class SharpMeshUnityEditor : Editor
         {
             obj.Clear();
         }
-        /*
-        foreach (SerializedMesh mesh in obj.outputMeshList)
-        {
-            GUILayout.Label(mesh.ToString());
-        }
-        */
-        // GUILayout.Label(obj.outputMeshList.Count.ToString());
-        GUILayout.Label("Output Mesh Count: " + obj.outputMeshList.Count.ToString());
+        GUILayout.Label("Output Mesh Count: " + obj.IntoMeshList().Count.ToString());
     }
 }
