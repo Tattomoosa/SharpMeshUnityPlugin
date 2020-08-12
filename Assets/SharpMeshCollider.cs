@@ -9,9 +9,11 @@ namespace SharpMeshUnity
     [ExecuteInEditMode]
     public class SharpMeshCollider : MonoBehaviour
     {
+        public bool useMeshFilter = true;
         public Mesh inputMesh;
         public bool debugDraw = true;
-        private SharpMeshObject sharpMesh;
+        [SerializeField]
+        public SharpMeshObject sharpMesh;
 
         private GameObject sharpMeshColliderParent;
         private List<Mesh> sharpMeshList;
@@ -21,7 +23,6 @@ namespace SharpMeshUnity
         void Start()
         {
             Process();
-            InitDebugDraw();
             if (Application.isPlaying)
                 CreateColliderGameObjects();
         }
@@ -30,14 +31,19 @@ namespace SharpMeshUnity
         void Update()
         {
             // TODO for some reason these meshes are only lit from one side...
-            if (debugDraw)
+            if (Application.isPlaying)
+            {
+            }
+            else if (debugDraw)
+            {
                 for (int i = 0; i < sharpMeshList.Count; ++i)
                     Graphics.DrawMesh(sharpMeshList[i], transform.position, Quaternion.identity, debugDrawMaterials[i], 0);
+            }
         }
 
         private void GetInputMesh()
         {
-            if (!inputMesh)
+            if (useMeshFilter)
                 inputMesh = GetComponent<MeshFilter>().sharedMesh;
             if (!inputMesh)
                 Debug.LogError("Input mesh required.");
@@ -59,7 +65,7 @@ namespace SharpMeshUnity
                 });
         }
 
-        void Process()
+        public void Process()
         {
             Debug.Log("Processing...");
             GetInputMesh();
@@ -67,6 +73,7 @@ namespace SharpMeshUnity
             sharpMesh.inputMesh = inputMesh;
             sharpMesh.Process();
             sharpMeshList = sharpMesh.IntoMeshList();
+            InitDebugDraw();
         }
 
         void CreateColliderGameObjects()
@@ -89,7 +96,9 @@ namespace SharpMeshUnity
                 meshColliderObject.transform.position = sharpMeshColliderParent.transform.position;
                 // add collider component and attach mesh
                 MeshCollider meshCollider = meshColliderObject.AddComponent<MeshCollider>();
+                meshCollider.convex = true;
                 meshCollider.sharedMesh = mesh;
+                // meshCollider.sharedMesh = mesh;
             }
         }
     }

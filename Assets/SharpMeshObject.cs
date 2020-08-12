@@ -34,7 +34,6 @@ namespace SharpMeshUnity
             outputMeshList.Add(TestCreateCube());
             // outputMeshList.Add(new SerializedMesh(SharpMeshToMesh(sInputMesh)));
 
-            // 
             Profiler.EndSample();
         }
 
@@ -98,6 +97,7 @@ namespace SharpMeshUnity
         {
             Profiler.BeginSample("SharpMesh: Converting serialized meshes into UnityEngine meshes");
             List<Mesh> meshes = new List<Mesh>();
+            Debug.Log(outputMeshList.Count());
             foreach (var serializedMesh in outputMeshList)
                 meshes.Add(serializedMesh.IntoMesh());
             Profiler.EndSample();

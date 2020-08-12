@@ -426,5 +426,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: SharpMeshColliderTestObject
       objectReference: {fileID: 0}
+    - target: {fileID: 126751902096923156, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
+        type: 3}
+      propertyPath: debugDraw
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126751902096923156, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
+        type: 3}
+      propertyPath: inputMesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34d97d0e6ffe0884bacac1d671dd4d22, type: 3}
