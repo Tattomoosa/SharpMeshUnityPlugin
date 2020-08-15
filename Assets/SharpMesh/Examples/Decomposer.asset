@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d357d30f8c3f74d809dcae2e67e699, type: 3}
   m_Name: Decomposer
   m_EditorClassIdentifier: 
+  method: 0
+  options:
+    precision: 0.1

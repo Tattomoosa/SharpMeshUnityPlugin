@@ -30,12 +30,7 @@ namespace SharpMeshUnity
         // Update is called once per frame
         void Update()
         {
-            // TODO should debugDraw draw during play? Colliders can be visualized without it...
-            if (Application.isPlaying)
-            {
-            }
-            // TODO for some reason these meshes are only lit from one side...
-            else if (debugDraw)
+            if (!Application.isPlaying && debugDraw)
             {
                 for (int i = 0; i < sharpMeshList.Count; ++i)
                     Graphics.DrawMesh(sharpMeshList[i], transform.position, Quaternion.identity, debugDrawMaterials[i], 0);
