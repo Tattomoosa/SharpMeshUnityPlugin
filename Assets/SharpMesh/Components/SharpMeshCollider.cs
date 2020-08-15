@@ -30,10 +30,11 @@ namespace SharpMeshUnity
         // Update is called once per frame
         void Update()
         {
-            // TODO for some reason these meshes are only lit from one side...
+            // TODO should debugDraw draw during play? Colliders can be visualized without it...
             if (Application.isPlaying)
             {
             }
+            // TODO for some reason these meshes are only lit from one side...
             else if (debugDraw)
             {
                 for (int i = 0; i < sharpMeshList.Count; ++i)
@@ -49,7 +50,7 @@ namespace SharpMeshUnity
                 Debug.LogError("Input mesh required.");
         }
 
-        private void GetOrCreateSharpMeshObject()
+        public void GetOrCreateSharpMeshObject()
         {
             if (!sharpMesh)
                 sharpMesh = ScriptableObject.CreateInstance<SharpMeshObject>();
@@ -76,6 +77,16 @@ namespace SharpMeshUnity
             InitDebugDraw();
         }
 
+        public void Clear()
+        {
+            if (sharpMeshColliderParent != null)
+                Destroy(sharpMeshColliderParent);
+        }
+
+        /// <summary>
+        /// Creates and initializes child GameObjects which actually contain the MeshCollider components.
+        /// This is expensive on game 
+        /// </summary>
         void CreateColliderGameObjects()
         {
             // init parent
