@@ -85,11 +85,15 @@ namespace SharpMeshUnity
             // TODO link up with physics primitives
             // BaseShape baseShape = 
 
+            public int resolution = 12;
+
             public SharpMesh.Decomposer.Voxel.VoxelOptions Create()
             {
                 // TODO add other properties
                 return new SharpMesh.Decomposer.Voxel.VoxelOptions(
-                        precision
+                        precision,
+                        false, // debug
+                        resolution
                     );
             }
 

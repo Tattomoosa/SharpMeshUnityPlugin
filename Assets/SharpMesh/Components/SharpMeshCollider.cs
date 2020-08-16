@@ -47,7 +47,8 @@ namespace SharpMeshUnity
             if (!Application.isPlaying && debugDraw && sharpMeshList != null)
             {
                 for (int i = 0; i < sharpMeshList.Count; ++i)
-                    Graphics.DrawMesh(sharpMeshList[i], transform.position, Quaternion.identity, debugDrawMaterials[i], 0);
+                    // Graphics.DrawMesh(sharpMeshList[i], transform.position, Quaternion.identity, debugDrawMaterials[i], 0);
+                    Graphics.DrawMesh(sharpMeshList[i], transform.position, transform.rotation, debugDrawMaterials[i], 0);
             }
         }
 

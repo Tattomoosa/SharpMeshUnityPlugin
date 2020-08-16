@@ -31,10 +31,15 @@ public class SharpMeshDecomposerEditor : Editor
     // options?
     public void DecompositionOptions(SharpMeshDecomposer obj)
     {
-        obj.options.precision = EditorGUILayout.FloatField("Resolution", obj.options.precision);
+        obj.options.precision = EditorGUILayout.FloatField("Precision", obj.options.precision);
         switch (obj.method)
         {
             case SharpMeshDecomposer.Method.Voxel:
+                if (obj.options is SharpMeshDecomposer.VoxelOptions)
+                {
+                    var opt = (SharpMeshDecomposer.VoxelOptions)obj.options;
+                    opt.resolution = EditorGUILayout.IntField("Resolution", opt.resolution);
+                }
                 break;
             default:
                 GUILayout.Label("Unknown Method");
