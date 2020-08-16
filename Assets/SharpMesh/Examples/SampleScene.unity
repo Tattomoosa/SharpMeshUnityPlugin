@@ -203,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 126751902096923156, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
         type: 3}
       propertyPath: useMeshFilter
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 126751902096923156, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
         type: 3}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a36648d0b210d4180b1a4f0c43f09d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  inputMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   decomposer: {fileID: 746629487}
 --- !u!1 &705507993
 GameObject:
@@ -620,6 +620,11 @@ PrefabInstance:
       propertyPath: sharpMesh
       value: 
       objectReference: {fileID: 1829571867}
+    - target: {fileID: 126751902096923158, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 126751902096923159, guid: 34d97d0e6ffe0884bacac1d671dd4d22,
         type: 3}
       propertyPath: m_Mesh
