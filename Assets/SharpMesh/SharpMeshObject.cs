@@ -8,11 +8,15 @@ namespace SharpMeshUnity
     [CreateAssetMenu(fileName = "SharpMesh", menuName = "SharpMesh/SharpMesh", order = 1)]
     public class SharpMeshObject : ScriptableObject
     {
+        // Mesh to be decomposed.
         public Mesh inputMesh;
-        public SharpMeshDecomposer decomposer = null;
-        private List<SerializedMesh> outputMeshList;
 
-        private double lastDecompositionTime = -1.0;
+        // Decomposition method and options to decompose inputMesh with.
+        public SharpMeshDecomposer decomposer = null;
+
+        // Mesh output of a decomposition into a custom serialized Mesh class
+        // so it can be saved into game data.
+        private List<SerializedMesh> outputMeshList;
 
         /// <summary>
         /// Processes an input mesh into a list of serialized mesh data.
@@ -25,20 +29,15 @@ namespace SharpMeshUnity
                 Debug.LogError("SharpMesh: Must specify a Mesh to process.");
                 return;
             }
-            // SharpMesh.Data.Mesh<float> sInputMesh = MeshToSharpMesh(inputMesh);
             SharpMesh.Data.Mesh sInputMesh = MeshToSharpMesh(inputMesh);
-            // TODO
-            // 1. Create SharpMesh processor (maybe keep it as class member?)
-            // 2. Get output processed mesh
-            // 3. Convert to serialized mesh for outputMeshList
 
             // Clear output mesh list
             outputMeshList = new List<SerializedMesh>();
 
-            // Build decomposer
+            // Get the decomposer
             GetOrCreateSharpMeshDecomposer();
             var decompResult = decomposer.Run(sInputMesh);
-            // Error TODO better errors
+            // Error TODO: better errors
             if (decompResult == null)
                 Debug.LogError("Null Decomposition Error");
             else if (decompResult.FinishedWithError)
@@ -46,9 +45,8 @@ namespace SharpMeshUnity
             // Success
             else
             {
-                lastDecompositionTime = decompResult.TimeTaken;
-                Debug.Log("Input mesh decomposed in " + lastDecompositionTime +
-                    ", resulting in " + decompResult.Mesh.Count + " convex meshes.");
+                Debug.Log("Input mesh decomposed into " +
+                    decompResult.Mesh.Count + " convex meshes.");
                 foreach (var mesh in decompResult.Mesh)
                     outputMeshList.Add(new SerializedMesh(SharpMeshToMesh(mesh)));
             }
@@ -64,11 +62,17 @@ namespace SharpMeshUnity
             outputMeshList.Clear();
         }
 
+        /// <summary>
+        /// If no decomposer exists, creates one.
+        /// </summary>
+        // Should this be a getter?
         public void GetOrCreateSharpMeshDecomposer()
         {
             if (!decomposer)
                 decomposer = ScriptableObject.CreateInstance<SharpMeshDecomposer>();
         }
+
+        // TODO maybe make a utility class to contain all these different type conversions.
 
         /// <summary>
         /// Creates a SharpMesh.Mesh from a UnityEngine.Data.Mesh
@@ -80,7 +84,6 @@ namespace SharpMeshUnity
                 sMesh.Vertices.Add(Vector3ToSharpVector(vertex));
             foreach (int triIndex in mesh.triangles)
                 sMesh.Triangles.Add(triIndex);
-                // sMesh.Triangles = mesh.triangles.ToList();
             return sMesh;
         }
 
@@ -95,7 +98,8 @@ namespace SharpMeshUnity
                 vertices.Add(SharpVectorToVector3(vertex));
             mesh.vertices = vertices.ToArray();
             mesh.triangles = sMesh.Triangles.ToArray();
-            // TODO keep track of normals
+            // TODO keep track of normals? In library?
+            // This way should always work but maybe is a bit sloppy.
             mesh.RecalculateNormals();
             return mesh;
         }
@@ -128,36 +132,6 @@ namespace SharpMeshUnity
                 meshes.Add(serializedMesh.IntoMesh());
             Profiler.EndSample();
             return meshes;
-        }
-
-        // TODO Temporary for testing. Referenced from http://ilkinulas.github.io/development/unity/2016/04/30/cube-mesh-in-unity3d.html
-        private SerializedMesh TestCreateCube()
-        {
-            Vector3[] vertices = {
-            new Vector3(0, 0, 0),
-            new Vector3(1, 0, 0),
-            new Vector3(1, 1, 0),
-            new Vector3(0, 1, 0),
-            new Vector3(0, 1, 1),
-            new Vector3(1, 1, 1),
-            new Vector3(1, 0, 1),
-            new Vector3(0, 0, 1),
-        };
-            int[] triangles = {
-            0, 2, 1, //face front
-            0, 3, 2,
-            2, 3, 4, //face top
-            2, 4, 5,
-            1, 2, 5, //face right
-            1, 5, 6,
-            0, 7, 4, //face left
-            0, 4, 3,
-            5, 4, 7, //face back
-            5, 7, 6,
-            0, 6, 7, //face bottom
-            0, 1, 6
-        };
-            return new SerializedMesh(vertices, triangles);
         }
     }
 }

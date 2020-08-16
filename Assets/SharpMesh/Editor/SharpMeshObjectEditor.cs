@@ -40,19 +40,7 @@ public class SharpMeshObjectEditor : Editor
     // TODO make DecompositionOptions its own editor class.
     public void DecompositionOptions(SharpMeshObject obj)
     {
-        // TODO make a getter
         ((SharpMeshDecomposerEditor)decompOptionsEditor).DecompositionMethodPopup(obj.decomposer);
         ((SharpMeshDecomposerEditor)decompOptionsEditor).DecompositionOptions(obj.decomposer);
-        /*
-        obj.decompMethod = (DecompositionMethod)EditorGUILayout.EnumPopup("Decomposition Method", obj.decompMethod);
-        switch (obj.decompMethod)
-        {
-            case SharpMeshUnity.DecompositionMethod.Voxel:
-                var resolution = EditorGUILayout.FloatField("Resolution: ", 1.0f);
-                break;
-            default:
-                break;
-        }
-        */
     }
 }

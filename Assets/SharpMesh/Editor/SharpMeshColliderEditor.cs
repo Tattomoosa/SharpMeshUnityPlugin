@@ -8,7 +8,7 @@ using SharpMeshUnity;
 public class SharpMeshColliderEditor : Editor
 {
     private SharpMeshObjectEditor smObjEditor;
-    bool decompOptionsExpanded = false;
+
     private void OnEnable()
     {
         SharpMeshCollider obj = (SharpMeshCollider)target;
@@ -20,12 +20,12 @@ public class SharpMeshColliderEditor : Editor
     {
         SharpMeshCollider obj = (SharpMeshCollider)target;
 
-        EditorGUILayout.LabelField("[ Decomposition Options ]", EditorStyles.boldLabel);
         // Decomposition Algorithm Settings
+        EditorGUILayout.LabelField("[ Decomposition Options ]", EditorStyles.boldLabel);
         smObjEditor.DecompositionOptions(obj.sharpMesh);
 
-        EditorGUILayout.LabelField("[ Input Mesh ]", EditorStyles.boldLabel);
         // Input Mesh
+        EditorGUILayout.LabelField("[ Input Mesh ]", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("useMeshFilter"), new GUIContent("Input From Mesh Filter Component"));
         if (!obj.useMeshFilter)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("inputMesh"));
@@ -33,7 +33,7 @@ public class SharpMeshColliderEditor : Editor
         // Debug Draw toggle
         EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDraw"));
 
-
+        // Actions
         if (GUILayout.Button("Process"))
         {
             Debug.Log("Processing...");
